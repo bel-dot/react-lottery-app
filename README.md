@@ -1,1 +1,1 @@
-# react-lottery-app
+# React Lottery App

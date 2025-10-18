@@ -72,7 +72,7 @@ export default function RegisterForm(props: propsInterface) {
                 placeholder="Enter email"
                 label="Email"
                 max=""
-                pattern=".*@.*\..*"
+                pattern="\w+@\w+\.\w+"
                 invalid="The email is invalid"
             />
             <RegisterInput

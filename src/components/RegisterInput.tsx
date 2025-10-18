@@ -15,7 +15,7 @@ export default function RegisterInput(props: propsInterface) {
                 fb.textContent = "This field is required.";
                 return false;
             } else if (
-                !props.pattern.test(value) ||
+                !RegExp(props.pattern).test(value) ||
                 (props.type === "date" &&
                     Date.parse(value) > Date.parse(props.max))
             ) {
@@ -90,7 +90,7 @@ interface propsInterface {
     name: string;
     label: string;
     type: string;
-    pattern: RegExp;
+    pattern: string;
     placeholder: string;
     max: string;
     invalid: string;

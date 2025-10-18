@@ -1,4 +1,7 @@
-export default function UsersBlock() {
+import type User from "../User";
+import UserRow from "./UserRow";
+
+export default function UsersBlock(props: propsInterface) {
     return (
         <div className="w-full bg-white border border-gray-300 rounded-md flex gap-7 p-6">
             <table className="w-full table-fixed">
@@ -11,8 +14,20 @@ export default function UsersBlock() {
                         <th className="w-[20%]">Phone number</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    {props.users.map((usr, i) => (
+                        <UserRow
+                            user={usr}
+                            last={i === props.users.length - 1}
+                            key={usr.id}
+                        />
+                    ))}
+                </tbody>
             </table>
         </div>
     );
+}
+
+interface propsInterface {
+    users: User[];
 }

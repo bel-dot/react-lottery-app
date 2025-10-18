@@ -85,7 +85,9 @@ export default function RegisterForm(props: propsInterface) {
                 invalid="The phone number is invalid"
             />
             <div className="mt-15 flex justify-end w-full">
-                <Button type="submit">Save</Button>
+                <Button type="submit" handleClick={() => {}} disabled={false}>
+                    Save
+                </Button>
             </div>
         </form>
     );

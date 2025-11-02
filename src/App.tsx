@@ -11,16 +11,16 @@ function App() {
     const [userId, setUserId] = useState(0);
 
     useEffect(() => {
-        function getUsers() {
+        // function getUsers() {
             const userStorage = localStorage.getItem("users");
             const idStorage = localStorage.getItem("id");
             if (userStorage && idStorage) {
                 setUsers(JSON.parse(userStorage) as User[]);
                 setUserId(Number(idStorage));
             }
-        }
+        // }
 
-        getUsers();
+        // getUsers();
     }, []);
 
     function addUser(
@@ -53,7 +53,6 @@ function App() {
     }
 
     return (
-        <>
             <div className="flex flex-col items-center w-5xl gap-8">
                 <WinnersBlock
                     winners={winners}
@@ -64,7 +63,6 @@ function App() {
                 <RegisterBlock addUser={addUser} />
                 <UsersBlock users={users} />
             </div>
-        </>
     );
 }
 

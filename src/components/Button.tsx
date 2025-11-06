@@ -14,6 +14,6 @@ export default function Button(props: propsInterface) {
 interface propsInterface {
     children: React.ReactNode;
     type: "submit" | "button";
-    disabled: boolean;
-    handleClick: () => void;
+    disabled?: boolean;
+    handleClick?: () => void;
 }

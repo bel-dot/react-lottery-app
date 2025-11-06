@@ -1,3 +1,4 @@
+import User from "../User";
 import Button from "./Button";
 import RegisterInput from "./RegisterInput";
 
@@ -20,7 +21,14 @@ export default function RegisterForm(props: propsInterface) {
         const email = emailInput.value;
         const phone = phoneInput.value;
 
-        props.addUser(name, date, email, phone);
+        if(props.user && props.editUser) {
+            const newUser = new User(props.user.id, name, date, email, phone);
+            props.editUser(props.user, newUser);
+        }
+        else if(props.addUser) {
+            props.addUser(name, date, email, phone);
+        }
+
 
         nameInput.value = "";
         dateInput.value = "";
@@ -50,37 +58,35 @@ export default function RegisterForm(props: propsInterface) {
         <form className="mt-10" onSubmit={(e) => handleSubmit(e)}>
             <RegisterInput
                 name="name"
+                value={props.user ? props.user.name : ''}
                 type="text"
                 placeholder="Enter user name"
                 label="Name"
-                max=""
-                pattern=".*"
-                invalid=""
             />
             <RegisterInput
                 name="date"
+                value={props.user ? props.user.birth : ''}
                 type="date"
                 placeholder="mm/dd/yyyy"
                 label="Date of Birth"
                 max={Date()}
-                pattern=".*"
                 invalid="You can't go back to the future!"
             />
             <RegisterInput
                 name="email"
+                value={props.user ? props.user.email : ''}
                 type="email"
                 placeholder="Enter email"
                 label="Email"
-                max=""
                 pattern="\w+@\w+\.\w+"
                 invalid="The email is invalid"
             />
             <RegisterInput
                 name="phone"
+                value={props.user ? props.user.phone : ''}
                 type="tel"
                 placeholder="Enter Phone number"
                 label="Phone number"
-                max=""
                 pattern="\d{10}"
                 invalid="The phone number is invalid"
             />
@@ -94,10 +100,15 @@ export default function RegisterForm(props: propsInterface) {
 }
 
 interface propsInterface {
-    addUser: (
+    addUser?: (
         name: string,
         birth: string,
         email: string,
         phone: string,
     ) => void;
+    editUser?: (
+        oldUser: User,
+        newUser: User
+    ) => void
+    user?: User;
 }

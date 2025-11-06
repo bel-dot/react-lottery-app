@@ -15,11 +15,11 @@ export default function RegisterInput(props: propsInterface) {
                 fb.textContent = "This field is required.";
                 return false;
             } else if (
-                !RegExp(props.pattern).test(value) ||
+                !RegExp(props.pattern as (string | RegExp)).test(value) ||
                 (props.type === "date" &&
-                    Date.parse(value) > Date.parse(props.max))
+                    Date.parse(value) > Date.parse(props.max as string))
             ) {
-                fb.textContent = props.invalid;
+                fb.textContent = props.invalid as string;
                 return false;
             } else {
                 fb.textContent = "";
@@ -69,7 +69,7 @@ export default function RegisterInput(props: propsInterface) {
                 required
                 onInput={handleInput}
                 className="border-gray-300 border rounded-sm p-3 bg-gray-50 transition-colors"
-                pattern={props.pattern.toString()}
+                pattern={props.pattern}
                 max={props.max}
             />
             <i
@@ -88,10 +88,11 @@ export default function RegisterInput(props: propsInterface) {
 
 interface propsInterface {
     name: string;
-    label: string;
+    value?: string;
+    label?: string;
     type: string;
-    pattern: string;
-    placeholder: string;
-    max: string;
-    invalid: string;
+    pattern?: string;
+    placeholder?: string;
+    max?: string;
+    invalid?: string;
 }

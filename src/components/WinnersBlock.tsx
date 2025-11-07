@@ -5,7 +5,7 @@ import User from "../User";
 export default function WinnersBlock(props: propsInterface) {
     return (
         <div className="w-full bg-white border border-gray-300 rounded-md flex gap-7 p-6">
-            <div className="border border-gray-300 rounded-sm p-3 w-full flex gap-3 items-center">
+            <div className="border border-gray-300 rounded-sm p-3 flex flex-1 gap-3 items-center">
                 {props.winners.map((usr) => (
                     <WinnerTag
                         user={usr}

@@ -18,5 +18,5 @@ interface propsInterface {
         birth: string,
         email: string,
         phone: string,
-    ) => void;
+    ) => boolean;
 }

@@ -70,7 +70,7 @@ interface propsInterface {
     type: string,
     user: User,
     active: boolean,
-    editUser: (id: number, newUser: User) => void,
+    editUser: (id: number, newUser: User) => boolean,
     deleteUser: (id: number) => void
     closeModal: () => void;
 }

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Input(props: propsInterface) {
     const inputField = useRef(null);
@@ -27,6 +27,13 @@ export default function Input(props: propsInterface) {
             }
         }
     }
+    
+    useEffect(() => {
+        if(feedback.current && props.invalid?.includes('used')) {
+            const fb = feedback.current as Element;
+            fb.textContent = props.invalid as string;
+        }
+    }, [props.invalid]);
 
     function handleInput() {
         clearTimeout(timeoutId);

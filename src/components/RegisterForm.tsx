@@ -1,7 +1,10 @@
+import { useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 
 export default function RegisterForm(props: propsInterface) {
+    const [email, setEmail] = useState(true);
+
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
@@ -20,31 +23,39 @@ export default function RegisterForm(props: propsInterface) {
         const email = emailInput.value;
         const phone = phoneInput.value;
 
-        props.addUser(name, date, email, phone);
+        if(props.addUser(name, date, email, phone)) {
+            nameInput.value = "";
+            dateInput.value = "";
+            emailInput.value = "";
+            phoneInput.value = "";
 
+            nameInput.classList.remove("border-green-400");
+            nameInput.classList.add("border-gray-300");
+            dateInput.classList.remove("border-green-400");
+            dateInput.classList.add("border-gray-300");
+            emailInput.classList.remove("border-green-400");
+            emailInput.classList.add("border-gray-300");
+            phoneInput.classList.remove("border-green-400");
+            phoneInput.classList.add("border-gray-300");
 
-        nameInput.value = "";
-        dateInput.value = "";
-        emailInput.value = "";
-        phoneInput.value = "";
+            nameIcon.classList.remove("opacity-100");
+            nameIcon.classList.add("opacity-0");
+            dateIcon.classList.remove("opacity-100");
+            dateIcon.classList.add("opacity-0");
+            emailIcon.classList.remove("opacity-100");
+            emailIcon.classList.add("opacity-0");
+            phoneIcon.classList.remove("opacity-100");
+            phoneIcon.classList.add("opacity-0");
+        }
+        else {
+            emailInput.classList.remove("border-green-400");
+            emailInput.classList.add("border-red-400");
 
-        nameInput.classList.remove("border-green-400");
-        nameInput.classList.add("border-gray-300");
-        dateInput.classList.remove("border-green-400");
-        dateInput.classList.add("border-gray-300");
-        emailInput.classList.remove("border-green-400");
-        emailInput.classList.add("border-gray-300");
-        phoneInput.classList.remove("border-green-400");
-        phoneInput.classList.add("border-gray-300");
+            emailIcon.classList.remove("opacity-100");
+            emailIcon.classList.add("opacity-0");
 
-        nameIcon.classList.remove("opacity-100");
-        nameIcon.classList.add("opacity-0");
-        dateIcon.classList.remove("opacity-100");
-        dateIcon.classList.add("opacity-0");
-        emailIcon.classList.remove("opacity-100");
-        emailIcon.classList.add("opacity-0");
-        phoneIcon.classList.remove("opacity-100");
-        phoneIcon.classList.add("opacity-0");
+            setEmail(false);
+        }
     }
 
     return (
@@ -69,7 +80,7 @@ export default function RegisterForm(props: propsInterface) {
                 placeholder="Enter email"
                 label="Email"
                 pattern="\w+@\w+\.\w+"
-                invalid="The email is invalid"
+                invalid={email ? "The email is invalid" : "The email is used by another user"}
             />
             <Input
                 name="phone"
@@ -94,5 +105,5 @@ interface propsInterface {
         birth: string,
         email: string,
         phone: string,
-    ) => void;
+    ) => boolean;
 }

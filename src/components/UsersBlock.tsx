@@ -89,6 +89,6 @@ export default function UsersBlock(props: propsInterface) {
 
 interface propsInterface {
     users: User[];
-    editUser: (id: number, newUser: User) => void;
+    editUser: (id: number, newUser: User) => boolean;
     deleteUser: (id: number) => void;
 }

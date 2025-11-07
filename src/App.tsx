@@ -37,6 +37,28 @@ function App() {
         localStorage.setItem("users", JSON.stringify(newUsers));
         localStorage.setItem("id", (userId + 1).toString());
     }
+    
+    function editUser(id: number, newUser: User) {
+        const usersCopy = [...users];
+        const index = usersCopy.findIndex(usr => usr.id === id);
+        console.log(index);
+        if(index >= 0) {
+            usersCopy[index] = newUser;
+        }
+        console.log('changing state...');
+        setUsers(usersCopy);
+        localStorage.setItem("users", JSON.stringify(usersCopy));
+    }
+    
+    function deleteUser(id: number) {
+        const usersCopy = [...users];
+        const index = usersCopy.findIndex(usr => usr.id === id);
+        if(index > 0)
+            usersCopy.splice(index, 1);
+        
+        setUsers(usersCopy);
+        localStorage.setItem("users", JSON.stringify(usersCopy));
+    }
 
     function addWinner() {
         let winner: User;
@@ -61,7 +83,11 @@ function App() {
                     usersAmount={users.length}
                 />
                 <RegisterBlock addUser={addUser} />
-                <UsersBlock users={users} />
+                <UsersBlock 
+                users={users}
+                deleteUser={deleteUser}
+                editUser={editUser}
+                />
             </div>
     );
 }

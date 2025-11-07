@@ -1,8 +1,22 @@
 import Button from "./Button"
 import User from "../User"
-import RegisterForm from "./RegisterForm"
+import EditForm from "./EditForm"
+import { useEffect } from "react"
 
 export default function Modal(props: propsInterface) {
+    useEffect(() => {
+        const handleKey = (e: KeyboardEvent) => {
+            if(e.key.toLowerCase() === 'escape') {
+                props.closeModal();
+            }
+        }
+        console.log(props.user.email, props.user.birth, props.user.id);
+
+        window.addEventListener('keydown', handleKey);
+        
+        return () => window.removeEventListener('keydown', handleKey);
+    })
+
     let content = <></>
     switch(props.type) {
         case 'edit':
@@ -13,7 +27,7 @@ export default function Modal(props: propsInterface) {
                         <i className="fa fa-remove text-gray-500"></i>
                     </button>
                 </div>
-                <RegisterForm user={props.user} editUser={props.editUser} />
+                <EditForm user={props.user} editUser={props.editUser} closeModal={props.closeModal} />
             </>
             break;
         case 'delete':
@@ -27,6 +41,7 @@ export default function Modal(props: propsInterface) {
                 <Button type='button' handleClick={() => {
                     if(props.deleteUser)
                         props.deleteUser(props.user.id);
+                    props.closeModal();
                 }}>
                     Yes                    
                 </Button>
@@ -55,7 +70,7 @@ interface propsInterface {
     type: string,
     user: User,
     active: boolean,
-    editUser?: (old: User, newUser: User) => void,
-    deleteUser?: (id: number) => void
+    editUser: (id: number, newUser: User) => void,
+    deleteUser: (id: number) => void
     closeModal: () => void;
 }

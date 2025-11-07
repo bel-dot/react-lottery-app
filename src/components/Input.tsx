@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-export default function RegisterInput(props: propsInterface) {
+export default function Input(props: propsInterface) {
     const inputField = useRef(null);
     const feedback = useRef(null);
     const icon = useRef(null);
@@ -62,6 +62,7 @@ export default function RegisterInput(props: propsInterface) {
             <label className="font-bold text-xl">{props.label}</label>
             <input
                 type={props.type}
+                defaultValue={props.value}
                 name={props.name}
                 placeholder={props.placeholder}
                 id={props.name}

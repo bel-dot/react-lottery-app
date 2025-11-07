@@ -1,26 +1,29 @@
+import User from "../User";
 import Button from "./Button";
 import Input from "./Input";
 
-export default function RegisterForm(props: propsInterface) {
+export default function EditForm(props: propsInterface) {
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        const nameInput = document.getElementById("name") as HTMLInputElement;
-        const dateInput = document.getElementById("date") as HTMLInputElement;
-        const emailInput = document.getElementById("email") as HTMLInputElement;
-        const phoneInput = document.getElementById("phone") as HTMLInputElement;
+        const nameInput = document.getElementById("name-edit") as HTMLInputElement;
+        const dateInput = document.getElementById("date-edit") as HTMLInputElement;
+        const emailInput = document.getElementById("email-edit") as HTMLInputElement;
+        const phoneInput = document.getElementById("phone-edit") as HTMLInputElement;
 
-        const nameIcon = document.getElementById("name-icon") as Element;
-        const dateIcon = document.getElementById("date-icon") as Element;
-        const emailIcon = document.getElementById("email-icon") as Element;
-        const phoneIcon = document.getElementById("phone-icon") as Element;
+        const nameIcon = document.getElementById("name-edit-icon") as Element;
+        const dateIcon = document.getElementById("date-edit-icon") as Element;
+        const emailIcon = document.getElementById("email-edit-icon") as Element;
+        const phoneIcon = document.getElementById("phone-edit-icon") as Element;
 
         const name = nameInput.value;
         const date = dateInput.value;
         const email = emailInput.value;
         const phone = phoneInput.value;
 
-        props.addUser(name, date, email, phone);
+        const newUser = new User(props.user.id, name, date, email, phone);
+        props.editUser(props.user.id, newUser);
+        props.closeModal();
 
 
         nameInput.value = "";
@@ -50,13 +53,15 @@ export default function RegisterForm(props: propsInterface) {
     return (
         <form className="mt-10" onSubmit={(e) => handleSubmit(e)}>
             <Input
-                name="name"
+                name="name-edit"
+                value={props.user ? props.user.name : ''}
                 type="text"
                 placeholder="Enter user name"
                 label="Name"
             />
             <Input
-                name="date"
+                name="date-edit"
+                value={props.user ? props.user.birth : ''}
                 type="date"
                 placeholder="mm/dd/yyyy"
                 label="Date of Birth"
@@ -64,7 +69,8 @@ export default function RegisterForm(props: propsInterface) {
                 invalid="You can't go back to the future!"
             />
             <Input
-                name="email"
+                name="email-edit"
+                value={props.user ? props.user.email : ''}
                 type="email"
                 placeholder="Enter email"
                 label="Email"
@@ -72,7 +78,8 @@ export default function RegisterForm(props: propsInterface) {
                 invalid="The email is invalid"
             />
             <Input
-                name="phone"
+                name="phone-edit"
+                value={props.user ? props.user.phone : ''}
                 type="tel"
                 placeholder="Enter Phone number"
                 label="Phone number"
@@ -89,10 +96,10 @@ export default function RegisterForm(props: propsInterface) {
 }
 
 interface propsInterface {
-    addUser: (
-        name: string,
-        birth: string,
-        email: string,
-        phone: string,
-    ) => void;
+    editUser: (
+        id: number,
+        newUser: User
+    ) => void
+    user: User;
+    closeModal: () => void;
 }

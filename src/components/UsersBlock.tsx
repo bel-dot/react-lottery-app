@@ -41,13 +41,14 @@ export default function UsersBlock(props: propsInterface) {
                     })}
                 </tbody>
             </table>
-            <Modal active={modal} type={modalType} user={selectedUser} closeModal={closeModal} />
+            <Modal active={modal} type={modalType} user={selectedUser} closeModal={closeModal}
+            editUser={props.editUser} deleteUser={props.deleteUser} />
         </div>
     );
 }
 
 interface propsInterface {
     users: User[];
-    editUser: (old: User, newUser: User) => void;
+    editUser: (id: number, newUser: User) => void;
     deleteUser: (id: number) => void;
 }

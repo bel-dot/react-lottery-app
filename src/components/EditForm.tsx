@@ -51,7 +51,7 @@ export default function EditForm(props: propsInterface) {
     }
 
     return (
-        <form className="mt-10" onSubmit={(e) => handleSubmit(e)}>
+        <form className="mt-10" onSubmit={(e) => handleSubmit(e)} key={props.user.id}>
             <Input
                 name="name-edit"
                 value={props.user ? props.user.name : ''}

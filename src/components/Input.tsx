@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Input(props: propsInterface) {
     const inputField = useRef(null);

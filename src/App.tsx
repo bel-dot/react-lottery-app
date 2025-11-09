@@ -23,12 +23,21 @@ function App() {
         // getUsers();
     }, []);
 
+    function emailExists(email: string, ind?: number) {
+        if(ind) {
+            return users.findIndex(usr => usr.email === email) != ind;
+        }
+        return users.findIndex(usr => usr.email === email) != -1;
+    }
+
     function addUser(
         name: string,
         birth: string,
         email: string,
         phone: string,
-    ) {
+    ): boolean {
+        if(emailExists(email)) return false;
+
         const user = new User(userId, name, birth, email, phone);
         const newUsers = [...users, user];
         setUsers(newUsers);
@@ -36,18 +45,18 @@ function App() {
 
         localStorage.setItem("users", JSON.stringify(newUsers));
         localStorage.setItem("id", (userId + 1).toString());
+        return true;
     }
     
-    function editUser(id: number, newUser: User) {
+    function editUser(id: number, newUser: User): boolean {
         const usersCopy = [...users];
         const index = usersCopy.findIndex(usr => usr.id === id);
-        console.log(index);
-        if(index >= 0) {
+        if(index >= 0 && !emailExists(newUser.email, index)) {
             usersCopy[index] = newUser;
-        }
-        console.log('changing state...');
+        } else return false;
         setUsers(usersCopy);
         localStorage.setItem("users", JSON.stringify(usersCopy));
+        return true;
     }
     
     function deleteUser(id: number) {
